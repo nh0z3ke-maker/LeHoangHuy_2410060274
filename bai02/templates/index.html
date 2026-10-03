@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cryptography Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 760px;
+            margin: 40px auto;
+            line-height: 1.5;
+        }
+
+        h1 {
+            color: #1f2937;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        textarea,
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 18px;
+            background: #2563eb;
+            color: white;
+            border: 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 14px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ma hoa va giai ma</h1>
+    <p>Le Hoang Huy - 2410060274</p>
+
+    <form method="post">
+        <label for="cipher_type">Chon thuat toan</label>
+        <select id="cipher_type" name="cipher_type">
+            <option value="caesar" {% if cipher_type == "caesar" %}selected{% endif %}>Caesar Cipher</option>
+            <option value="playfair" {% if cipher_type == "playfair" %}selected{% endif %}>Playfair Cipher</option>
+        </select>
+
+        <label for="action">Chon chuc nang</label>
+        <select id="action" name="action">
+            <option value="encrypt" {% if action == "encrypt" %}selected{% endif %}>Ma hoa</option>
+            <option value="decrypt" {% if action == "decrypt" %}selected{% endif %}>Giai ma</option>
+        </select>
+
+        <label for="input_text">Nhap noi dung</label>
+        <textarea id="input_text" name="input_text" rows="5">{{ input_text }}</textarea>
+
+        <label for="shift">Khoa Caesar</label>
+        <input id="shift" name="shift" type="number" value="{{ shift }}">
+
+        <label for="key">Khoa Playfair</label>
+        <input id="key" name="key" type="text" value="{{ key }}">
+
+        <button type="submit">Thuc hien</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <h2>Ket qua</h2>
+        <p>{{ result }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
