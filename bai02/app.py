@@ -48,6 +48,56 @@ def index():
         key=key,
     )
 
+@app.post("/api/caesar/encrypt")
+def api_caesar_encrypt():
+    data = request.get_json(silent=True) or {}
 
+    plain_text = data.get("plain_text", "")
+    key = int(data.get("key", 3))
+
+    cipher = CaesarCipher(key)
+    encrypted_message = cipher.encrypt(plain_text)
+
+    return {
+        "encrypted_message": encrypted_message
+    }
+
+
+@app.post("/api/caesar/decrypt")
+def api_caesar_decrypt():
+    data = request.get_json(silent=True) or {}
+
+    cipher_text = data.get("cipher_text", "")
+    key = int(data.get("key", 3))
+
+    cipher = CaesarCipher(key)
+    decrypted_message = cipher.decrypt(cipher_text)
+
+    return {
+        "decrypted_message": decrypted_message
+    }
+
+@app.post("/api/playfair/encrypt")
+def api_playfair_encrypt():
+    data = request.get_json(silent=True) or {}
+    plain_text = data.get("plain_text", "")
+    key = data.get("key", "SECURITY")
+
+    cipher = PlayfairCipher(key)
+    encrypted_message = cipher.encrypt(plain_text)
+
+    return {"encrypted_message": encrypted_message}
+
+
+@app.post("/api/playfair/decrypt")
+def api_playfair_decrypt():
+    data = request.get_json(silent=True) or {}
+    cipher_text = data.get("cipher_text", "")
+    key = data.get("key", "SECURITY")
+
+    cipher = PlayfairCipher(key)
+    decrypted_message = cipher.decrypt(cipher_text)
+
+    return {"decrypted_message": decrypted_message}
 if __name__ == "__main__":
     app.run(debug=True)

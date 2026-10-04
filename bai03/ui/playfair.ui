@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>820</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Playfair Cipher - LeHoangHuy_2410060274</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="lbl_title">
+      <property name="styleSheet">
+       <string>font-size: 26px; font-weight: bold;</string>
+      </property>
+      <property name="text">
+       <string>PLAYFAIR CIPHER</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="lbl_student">
+      <property name="text">
+       <string>Lê Hoàng Huy - 2410060274</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="lbl_plain">
+      <property name="text">
+       <string>Bản rõ (Plain text):</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="txt_plain_text"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="keyLayout">
+      <item>
+       <widget class="QLabel" name="lbl_key">
+        <property name="text">
+         <string>Khóa (Key):</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="txt_key">
+        <property name="text">
+         <string>SECURITY</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="lbl_cipher">
+      <property name="text">
+       <string>Bản mã (Cipher text):</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="txt_cipher_text"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="buttonLayout">
+      <item>
+       <widget class="QPushButton" name="btn_encrypt">
+        <property name="text">
+         <string>Mã hóa (Encrypt)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_decrypt">
+        <property name="text">
+         <string>Giải mã (Decrypt)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
