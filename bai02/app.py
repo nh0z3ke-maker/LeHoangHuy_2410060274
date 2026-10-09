@@ -1,6 +1,8 @@
-# 2.5.6 - Tao giao dien web bang Flask
+# Bai 2.5.6: Giao dien web Flask
+# Bai 3.5.1: API Caesar cho ung dung desktop
+# Hoc vien: Le Hoang Huy - MSHV: 2410060274
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 from caesar_cipher import CaesarCipher
 from playfair_cipher import PlayfairCipher
@@ -8,6 +10,7 @@ from playfair_cipher import PlayfairCipher
 app = Flask(__name__)
 
 
+# Giao dien web Caesar va Playfair
 @app.route("/", methods=["GET", "POST"])
 def index():
     result = ""
@@ -26,13 +29,15 @@ def index():
 
         if cipher_type == "caesar":
             cipher = CaesarCipher(shift)
+
             if action == "encrypt":
                 result = cipher.encrypt(input_text)
             else:
                 result = cipher.decrypt(input_text)
 
-        if cipher_type == "playfair":
+        elif cipher_type == "playfair":
             cipher = PlayfairCipher(key)
+
             if action == "encrypt":
                 result = cipher.encrypt(input_text)
             else:
@@ -48,56 +53,60 @@ def index():
         key=key,
     )
 
-@app.post("/api/caesar/encrypt")
-def api_caesar_encrypt():
-    data = request.get_json(silent=True) or {}
 
-    plain_text = data.get("plain_text", "")
-    key = int(data.get("key", 3))
+# API ma hoa Caesar
+@app.route("/api/caesar/encrypt", methods=["POST"])
+def caesar_encrypt():
+    data = request.get_json(silent=True)
 
-    cipher = CaesarCipher(key)
-    encrypted_message = cipher.encrypt(plain_text)
+    if not isinstance(data, dict):
+        return jsonify({"error": "Du lieu phai la JSON."}), 400
 
-    return {
+    message = data.get("plain_text")
+    key = data.get("key")
+
+    if not isinstance(message, str):
+        return jsonify({"error": "plain_text phai la chuoi."}), 400
+
+    try:
+        shift = int(str(key))
+    except (TypeError, ValueError):
+        return jsonify({"error": "key phai la so nguyen."}), 400
+
+    cipher = CaesarCipher(shift)
+    encrypted_message = cipher.encrypt(message)
+
+    return jsonify({
         "encrypted_message": encrypted_message
-    }
+    })
 
 
-@app.post("/api/caesar/decrypt")
-def api_caesar_decrypt():
-    data = request.get_json(silent=True) or {}
+# API giai ma Caesar
+@app.route("/api/caesar/decrypt", methods=["POST"])
+def caesar_decrypt():
+    data = request.get_json(silent=True)
 
-    cipher_text = data.get("cipher_text", "")
-    key = int(data.get("key", 3))
+    if not isinstance(data, dict):
+        return jsonify({"error": "Du lieu phai la JSON."}), 400
 
-    cipher = CaesarCipher(key)
-    decrypted_message = cipher.decrypt(cipher_text)
+    message = data.get("cipher_text")
+    key = data.get("key")
 
-    return {
+    if not isinstance(message, str):
+        return jsonify({"error": "cipher_text phai la chuoi."}), 400
+
+    try:
+        shift = int(str(key))
+    except (TypeError, ValueError):
+        return jsonify({"error": "key phai la so nguyen."}), 400
+
+    cipher = CaesarCipher(shift)
+    decrypted_message = cipher.decrypt(message)
+
+    return jsonify({
         "decrypted_message": decrypted_message
-    }
-
-@app.post("/api/playfair/encrypt")
-def api_playfair_encrypt():
-    data = request.get_json(silent=True) or {}
-    plain_text = data.get("plain_text", "")
-    key = data.get("key", "SECURITY")
-
-    cipher = PlayfairCipher(key)
-    encrypted_message = cipher.encrypt(plain_text)
-
-    return {"encrypted_message": encrypted_message}
+    })
 
 
-@app.post("/api/playfair/decrypt")
-def api_playfair_decrypt():
-    data = request.get_json(silent=True) or {}
-    cipher_text = data.get("cipher_text", "")
-    key = data.get("key", "SECURITY")
-
-    cipher = PlayfairCipher(key)
-    decrypted_message = cipher.decrypt(cipher_text)
-
-    return {"decrypted_message": decrypted_message}
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

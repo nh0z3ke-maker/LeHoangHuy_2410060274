@@ -1,0 +1,7 @@
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Khoa RSA duoc tao khi chay ung dung
+bai03/cipher/rsa/keys/*.pem

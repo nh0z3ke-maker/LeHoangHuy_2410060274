@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui version="4.0">
+  <class>MainWindow</class>
+  <widget class="QMainWindow" name="MainWindow">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>960</width>
+        <height>760</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>RSA Cipher | Lê Hoàng Huy - 2410060274</string>
+    </property>
+    <property name="styleSheet">
+      <string>QMainWindow { background: #f3f6fb; }
+QWidget { font-family: "Segoe UI"; font-size: 14px; color: #23344d; }
+QLabel#lbl_title { font-size: 28px; font-weight: 700; color: #122746; }
+QLabel#lbl_subtitle, QLabel#lbl_footer { color: #687a92; font-size: 12px; }
+QLabel#lbl_badge { color: #2563eb; font-weight: 600; }
+QGroupBox { background: white; border: 1px solid #dce4ef; border-radius: 12px; margin-top: 16px; padding: 20px 16px 14px; font-weight: 600; }
+QGroupBox::title { subcontrol-origin: margin; left: 18px; padding: 0 6px; }
+QTextEdit, QLineEdit { background: #f9fbfe; border: 1px solid #d4deeb; border-radius: 7px; padding: 10px; font-weight: 400; selection-background-color: #2563eb; }
+QTextEdit:focus, QLineEdit:focus { border: 1px solid #2563eb; }
+QPushButton { background: #2563eb; color: white; border: none; border-radius: 7px; padding: 12px 24px; font-weight: 600; }
+QPushButton:hover { background: #1d4ed8; }
+QPushButton:pressed { background: #1e40af; }
+QPushButton#btn_decrypt { background: #e8eef9; color: #234a83; }
+QPushButton#btn_decrypt:hover { background: #dbe6f8; }
+
+QPushButton#btn_gen_keys { background: #122746; }
+QPushButton#btn_verify { background: #e8eef9; color: #234a83; }
+QTextEdit#txt_info { background: #edf3fb; }</string>
+    </property>
+    <widget class="QWidget" name="centralwidget">
+      <layout class="QVBoxLayout" name="main_layout">
+        <property name="leftMargin">
+          <number>28</number>
+        </property>
+        <property name="topMargin">
+          <number>24</number>
+        </property>
+        <property name="rightMargin">
+          <number>28</number>
+        </property>
+        <property name="bottomMargin">
+          <number>20</number>
+        </property>
+        <property name="spacing">
+          <number>10</number>
+        </property>
+        <item>
+          <widget class="QLabel" name="lbl_badge">
+            <property name="text">
+              <string>BÀI 3.5.2  /  MẬT MÃ KHÓA CÔNG KHAI</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QLabel" name="lbl_title">
+            <property name="text">
+              <string>RSA CIPHER</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QLabel" name="lbl_subtitle">
+            <property name="text">
+              <string>Mã hóa, giải mã và chữ ký số • PyQt5 + Flask API</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="keys_layout">
+            <item>
+              <widget class="QLabel" name="lbl_keys">
+                <property name="text">
+                  <string>01   Tạo cặp khóa trước khi thực hiện các chức năng</string>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="btn_gen_keys">
+                <property name="text">
+                  <string>Tạo khóa / Generate Keys</string>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="messages_layout">
+            <item>
+              <widget class="QGroupBox" name="group_plain">
+                <property name="title">
+                  <string>02   Bản rõ / Plain Text</string>
+                </property>
+                <layout class="QVBoxLayout" name="group_plain_layout">
+                  <item>
+                    <widget class="QTextEdit" name="txt_plain_text">
+                      <property name="placeholderText">
+                        <string>Nhập nội dung cần mã hóa…</string>
+                      </property>
+                      <property name="acceptRichText">
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </widget>
+            </item>
+            <item>
+              <widget class="QGroupBox" name="group_cipher">
+                <property name="title">
+                  <string>03   Bản mã / Cipher Text</string>
+                </property>
+                <layout class="QVBoxLayout" name="group_cipher_layout">
+                  <item>
+                    <widget class="QTextEdit" name="txt_cipher_text">
+                      <property name="placeholderText">
+                        <string>Bản mã RSA dạng hex…</string>
+                      </property>
+                      <property name="acceptRichText">
+                        <bool>false</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="cipher_buttons">
+            <item>
+              <widget class="QPushButton" name="btn_encrypt">
+                <property name="text">
+                  <string>Mã hóa / Encrypt</string>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="btn_decrypt">
+                <property name="text">
+                  <string>Giải mã / Decrypt</string>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <widget class="QGroupBox" name="group_signature">
+            <property name="title">
+              <string>04   Chữ ký số</string>
+            </property>
+            <layout class="QVBoxLayout" name="signature_layout">
+              <item>
+                <widget class="QLabel" name="lbl_sign_help">
+                  <property name="text">
+                    <string>Thông điệp dùng để ký và xác minh</string>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QTextEdit" name="txt_info">
+                  <property name="placeholderText">
+                    <string>Nhập thông điệp cần ký hoặc xác minh…</string>
+                  </property>
+                  <property name="acceptRichText">
+                    <bool>false</bool>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QLabel" name="lbl_signature">
+                  <property name="text">
+                    <string>Chữ ký / Signature (hex)</string>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QTextEdit" name="txt_sign">
+                  <property name="placeholderText">
+                    <string>Chữ ký được tạo hoặc chữ ký cần xác minh…</string>
+                  </property>
+                  <property name="acceptRichText">
+                    <bool>false</bool>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <layout class="QHBoxLayout" name="signature_buttons">
+                  <item>
+                    <widget class="QPushButton" name="btn_sign">
+                      <property name="text">
+                        <string>Ký thông điệp / Sign</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QPushButton" name="btn_verify">
+                      <property name="text">
+                        <string>Xác minh / Verify</string>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+            </layout>
+          </widget>
+        </item>
+        <item>
+          <widget class="QLabel" name="lbl_footer">
+            <property name="text">
+              <string>Lê Hoàng Huy  •  MSHV: 2410060274</string>
+            </property>
+          </widget>
+        </item>
+      </layout>
+    </widget>
+  </widget>
+  <tabstops>
+    <tabstop>btn_gen_keys</tabstop>
+    <tabstop>txt_plain_text</tabstop>
+    <tabstop>txt_cipher_text</tabstop>
+    <tabstop>btn_encrypt</tabstop>
+    <tabstop>btn_decrypt</tabstop>
+    <tabstop>txt_info</tabstop>
+    <tabstop>txt_sign</tabstop>
+    <tabstop>btn_sign</tabstop>
+    <tabstop>btn_verify</tabstop>
+  </tabstops>
+  <resources />
+  <connections />
+</ui>

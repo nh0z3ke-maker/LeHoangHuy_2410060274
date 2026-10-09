@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/caesar.ui'
+# Form implementation generated from reading ui file '.\ui\caesar.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,60 +14,61 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(760, 660)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setContentsMargins(24, 20, 24, 20)
-        self.verticalLayout.setSpacing(14)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.main_layout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.main_layout.setContentsMargins(28, 24, 28, 20)
+        self.main_layout.setSpacing(12)
+        self.main_layout.setObjectName("main_layout")
+        self.lbl_badge = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_badge.setObjectName("lbl_badge")
+        self.main_layout.addWidget(self.lbl_badge)
         self.lbl_title = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(18)
-        font.setBold(True)
-        font.setWeight(75)
-        self.lbl_title.setFont(font)
-        self.lbl_title.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_title.setObjectName("lbl_title")
-        self.verticalLayout.addWidget(self.lbl_title)
-        self.lbl_student = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_student.setAlignment(QtCore.Qt.AlignCenter)
-        self.lbl_student.setObjectName("lbl_student")
-        self.verticalLayout.addWidget(self.lbl_student)
-        self.lbl_plain_text = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_plain_text.setObjectName("lbl_plain_text")
-        self.verticalLayout.addWidget(self.lbl_plain_text)
-        self.txt_plain_text = QtWidgets.QTextEdit(self.centralwidget)
+        self.main_layout.addWidget(self.lbl_title)
+        self.lbl_subtitle = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_subtitle.setObjectName("lbl_subtitle")
+        self.main_layout.addWidget(self.lbl_subtitle)
+        self.group_message = QtWidgets.QGroupBox(self.centralwidget)
+        self.group_message.setObjectName("group_message")
+        self.plain_layout = QtWidgets.QVBoxLayout(self.group_message)
+        self.plain_layout.setObjectName("plain_layout")
+        self.txt_plain_text = QtWidgets.QTextEdit(self.group_message)
         self.txt_plain_text.setAcceptRichText(False)
         self.txt_plain_text.setObjectName("txt_plain_text")
-        self.verticalLayout.addWidget(self.txt_plain_text)
-        self.keyLayout = QtWidgets.QHBoxLayout()
-        self.keyLayout.setObjectName("keyLayout")
+        self.plain_layout.addWidget(self.txt_plain_text)
+        self.main_layout.addWidget(self.group_message)
+        self.key_layout = QtWidgets.QHBoxLayout()
+        self.key_layout.setObjectName("key_layout")
         self.lbl_key = QtWidgets.QLabel(self.centralwidget)
         self.lbl_key.setObjectName("lbl_key")
-        self.keyLayout.addWidget(self.lbl_key)
+        self.key_layout.addWidget(self.lbl_key)
         self.txt_key = QtWidgets.QLineEdit(self.centralwidget)
         self.txt_key.setObjectName("txt_key")
-        self.keyLayout.addWidget(self.txt_key)
-        self.verticalLayout.addLayout(self.keyLayout)
-        self.lbl_cipher_text = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_cipher_text.setObjectName("lbl_cipher_text")
-        self.verticalLayout.addWidget(self.lbl_cipher_text)
-        self.txt_cipher_text = QtWidgets.QTextEdit(self.centralwidget)
+        self.key_layout.addWidget(self.txt_key)
+        self.main_layout.addLayout(self.key_layout)
+        self.group_cipher = QtWidgets.QGroupBox(self.centralwidget)
+        self.group_cipher.setObjectName("group_cipher")
+        self.cipher_layout = QtWidgets.QVBoxLayout(self.group_cipher)
+        self.cipher_layout.setObjectName("cipher_layout")
+        self.txt_cipher_text = QtWidgets.QTextEdit(self.group_cipher)
         self.txt_cipher_text.setAcceptRichText(False)
         self.txt_cipher_text.setObjectName("txt_cipher_text")
-        self.verticalLayout.addWidget(self.txt_cipher_text)
-        self.buttonLayout = QtWidgets.QHBoxLayout()
-        self.buttonLayout.setObjectName("buttonLayout")
+        self.cipher_layout.addWidget(self.txt_cipher_text)
+        self.main_layout.addWidget(self.group_cipher)
+        self.button_layout = QtWidgets.QHBoxLayout()
+        self.button_layout.setObjectName("button_layout")
         self.btn_encrypt = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_encrypt.setMinimumSize(QtCore.QSize(0, 40))
         self.btn_encrypt.setObjectName("btn_encrypt")
-        self.buttonLayout.addWidget(self.btn_encrypt)
+        self.button_layout.addWidget(self.btn_encrypt)
         self.btn_decrypt = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_decrypt.setMinimumSize(QtCore.QSize(0, 40))
         self.btn_decrypt.setObjectName("btn_decrypt")
-        self.buttonLayout.addWidget(self.btn_decrypt)
-        self.verticalLayout.addLayout(self.buttonLayout)
+        self.button_layout.addWidget(self.btn_decrypt)
+        self.main_layout.addLayout(self.button_layout)
+        self.lbl_footer = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_footer.setObjectName("lbl_footer")
+        self.main_layout.addWidget(self.lbl_footer)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -79,18 +80,36 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Caesar Cipher - LeHoangHuy_2410060274"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Caesar Cipher | Le Hoang Huy - 2410060274"))
+        MainWindow.setStyleSheet(_translate("MainWindow", "QMainWindow { background: #f3f6fb; }\n"
+"QWidget { font-family: \"Segoe UI\"; font-size: 14px; color: #23344d; }\n"
+"QLabel#lbl_title { font-size: 28px; font-weight: 700; color: #122746; }\n"
+"QLabel#lbl_subtitle, QLabel#lbl_footer { color: #687a92; font-size: 12px; }\n"
+"QLabel#lbl_badge { color: #2563eb; font-weight: 600; }\n"
+"QGroupBox { background: white; border: 1px solid #dce4ef; border-radius: 12px; margin-top: 16px; padding: 20px 16px 14px; font-weight: 600; }\n"
+"QGroupBox::title { subcontrol-origin: margin; left: 18px; padding: 0 6px; }\n"
+"QTextEdit, QLineEdit { background: #f9fbfe; border: 1px solid #d4deeb; border-radius: 7px; padding: 10px; font-weight: 400; selection-background-color: #2563eb; }\n"
+"QTextEdit:focus, QLineEdit:focus { border: 1px solid #2563eb; }\n"
+"QPushButton { background: #2563eb; color: white; border: none; border-radius: 7px; padding: 12px 24px; font-weight: 600; }\n"
+"QPushButton:hover { background: #1d4ed8; }\n"
+"QPushButton:pressed { background: #1e40af; }\n"
+"QPushButton#btn_decrypt { background: #e8eef9; color: #234a83; }\n"
+"QPushButton#btn_decrypt:hover { background: #dbe6f8; }\n"
+""))
+        self.lbl_badge.setText(_translate("MainWindow", "BÀI 3.5.1  /  MẬT MÃ CỔ ĐIỂN"))
         self.lbl_title.setText(_translate("MainWindow", "CAESAR CIPHER"))
-        self.lbl_student.setText(_translate("MainWindow", "Lê Hoàng Huy - 2410060274"))
-        self.lbl_plain_text.setText(_translate("MainWindow", "Bản rõ (Plain text):"))
-        self.txt_plain_text.setPlaceholderText(_translate("MainWindow", "Nhập nội dung cần mã hóa..."))
-        self.lbl_key.setText(_translate("MainWindow", "Khóa dịch (Key):"))
+        self.lbl_subtitle.setText(_translate("MainWindow", "Ứng dụng desktop mã hóa và giải mã • PyQt5 + Flask API"))
+        self.group_message.setTitle(_translate("MainWindow", "01   Bản rõ / Plain Text"))
+        self.txt_plain_text.setPlaceholderText(_translate("MainWindow", "Nhập nội dung cần mã hóa…"))
+        self.lbl_key.setText(_translate("MainWindow", "Khóa dịch / Key"))
         self.txt_key.setText(_translate("MainWindow", "3"))
-        self.txt_key.setPlaceholderText(_translate("MainWindow", "Nhập số nguyên, ví dụ: 3"))
-        self.lbl_cipher_text.setText(_translate("MainWindow", "Bản mã (Cipher text):"))
-        self.txt_cipher_text.setPlaceholderText(_translate("MainWindow", "Kết quả mã hóa hoặc nội dung cần giải mã..."))
-        self.btn_encrypt.setText(_translate("MainWindow", "Mã hóa (Encrypt)"))
-        self.btn_decrypt.setText(_translate("MainWindow", "Giải mã (Decrypt)"))
+        self.txt_key.setPlaceholderText(_translate("MainWindow", "Số nguyên, ví dụ: 3"))
+        self.txt_key.setToolTip(_translate("MainWindow", "Số bước dịch chữ cái trong bảng chữ cái A–Z."))
+        self.group_cipher.setTitle(_translate("MainWindow", "02   Bản mã / Cipher Text"))
+        self.txt_cipher_text.setPlaceholderText(_translate("MainWindow", "Kết quả mã hóa hoặc bản mã cần giải mã…"))
+        self.btn_encrypt.setText(_translate("MainWindow", "Mã hóa / Encrypt"))
+        self.btn_decrypt.setText(_translate("MainWindow", "Giải mã / Decrypt"))
+        self.lbl_footer.setText(_translate("MainWindow", "Lê Hoàng Huy  •  MSHV: 2410060274"))
 
 
 if __name__ == "__main__":
