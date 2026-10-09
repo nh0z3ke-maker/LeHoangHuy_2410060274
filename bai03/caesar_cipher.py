@@ -1,3 +1,6 @@
+# Bai 3.5.1: Ung dung desktop Caesar goi API Flask
+# Le Hoang Huy - MSHV: 2410060274
+
 import sys
 import requests
 
@@ -5,67 +8,145 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ui.caesar import Ui_MainWindow
 
 
-class CaesarCipherWindow(QMainWindow):
+class MyApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.btn_encrypt.clicked.connect(self.encrypt_text)
-        self.ui.btn_decrypt.clicked.connect(self.decrypt_text)
+        self.api_url = "http://127.0.0.1:5000/api/caesar"
+
+        self.ui.btn_encrypt.clicked.connect(self.call_api_encrypt)
+        self.ui.btn_decrypt.clicked.connect(self.call_api_decrypt)
 
     def get_key(self):
         try:
-            return int(self.ui.txt_key.text())
+            return int(self.ui.txt_key.text().strip())
         except ValueError:
-            raise ValueError("Khóa phải là một số nguyên.")
+            QMessageBox.warning(
+                self,
+                "Khóa không hợp lệ",
+                "Vui lòng nhập khóa là số nguyên, ví dụ: 3."
+            )
+            return None
 
-    def encrypt_text(self):
+    def send_request(self, action, payload):
         try:
-            plain_text = self.ui.txt_plain_text.toPlainText()
-            key = self.get_key()
-
             response = requests.post(
-                "http://127.0.0.1:5000/api/caesar/encrypt",
-                json={
-                    "plain_text": plain_text,
-                    "key": key
-                },
-                timeout=5
+                f"{self.api_url}/{action}",
+                json=payload,
+                timeout=10
             )
 
-            response.raise_for_status()
-            result = response.json()["encrypted_message"]
-            self.ui.txt_cipher_text.setPlainText(result)
+            data = response.json()
 
-        except Exception as error:
-            QMessageBox.critical(self, "Lỗi mã hóa", str(error))
+            if response.status_code != 200:
+                QMessageBox.warning(
+                    self,
+                    "Lỗi API",
+                    data.get("error", "Không xử lý được yêu cầu.")
+                )
+                return None
 
-    def decrypt_text(self):
-        try:
-            cipher_text = self.ui.txt_cipher_text.toPlainText()
-            key = self.get_key()
+            return data
 
-            response = requests.post(
-                "http://127.0.0.1:5000/api/caesar/decrypt",
-                json={
-                    "cipher_text": cipher_text,
-                    "key": key
-                },
-                timeout=5
+        except requests.exceptions.ConnectionError:
+            QMessageBox.warning(
+                self,
+                "Không kết nối được",
+                "Hãy chạy bai02/app.py trước khi mã hóa hoặc giải mã."
             )
 
-            response.raise_for_status()
-            result = response.json()["decrypted_message"]
-            self.ui.txt_plain_text.setPlainText(result)
+        except requests.exceptions.Timeout:
+            QMessageBox.warning(
+                self,
+                "Hết thời gian chờ",
+                "API chưa phản hồi. Vui lòng kiểm tra rồi thử lại."
+            )
 
-        except Exception as error:
-            QMessageBox.critical(self, "Lỗi giải mã", str(error))
+        except (requests.exceptions.RequestException, ValueError):
+            QMessageBox.warning(
+                self,
+                "Lỗi phản hồi",
+                "Không nhận được phản hồi JSON hợp lệ từ API."
+            )
+
+        return None
+
+    def call_api_encrypt(self):
+        key = self.get_key()
+
+        if key is None:
+            return
+
+        plain_text = self.ui.txt_plain_text.toPlainText()
+
+        if not plain_text.strip():
+            QMessageBox.warning(
+                self,
+                "Thiếu nội dung",
+                "Vui lòng nhập bản rõ cần mã hóa."
+            )
+            return
+
+        data = self.send_request(
+            "encrypt",
+            {
+                "plain_text": plain_text,
+                "key": key
+            }
+        )
+
+        if data is not None:
+            self.ui.txt_cipher_text.setPlainText(
+                data["encrypted_message"]
+            )
+
+            QMessageBox.information(
+                self,
+                "Thành công",
+                "Mã hóa Caesar thành công."
+            )
+
+    def call_api_decrypt(self):
+        key = self.get_key()
+
+        if key is None:
+            return
+
+        cipher_text = self.ui.txt_cipher_text.toPlainText()
+
+        if not cipher_text.strip():
+            QMessageBox.warning(
+                self,
+                "Thiếu nội dung",
+                "Vui lòng nhập bản mã cần giải mã."
+            )
+            return
+
+        data = self.send_request(
+            "decrypt",
+            {
+                "cipher_text": cipher_text,
+                "key": key
+            }
+        )
+
+        if data is not None:
+            self.ui.txt_plain_text.setPlainText(
+                data["decrypted_message"]
+            )
+
+            QMessageBox.information(
+                self,
+                "Thành công",
+                "Giải mã Caesar thành công."
+            )
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = CaesarCipherWindow()
+    window = MyApp()
     window.show()
     sys.exit(app.exec_())
